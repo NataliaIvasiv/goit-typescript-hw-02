@@ -40,7 +40,7 @@ const App = () => {
     }
         try {
             setLoading(true);
-            const img = await fetchApi(query, currentPage);
+          const img = await fetchApi(query, currentPage);
             setNumberOfPage(img.data.total_pages)
             const newImages = img.data.results;
             if (img.data.total_pages === 0) {
