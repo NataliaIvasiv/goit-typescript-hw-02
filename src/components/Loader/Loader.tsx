@@ -1,6 +1,8 @@
 import { Circles } from "react-loader-spinner";
 import css from './Loader.module.css'
-const Loader = () => {
+
+
+const Loader = ({loading}: {loading:boolean}) => {
     return (<div className={css.loader}>
         <Circles
   height="80"
@@ -9,7 +11,7 @@ const Loader = () => {
   ariaLabel="circles-loading"
   wrapperStyle={{}}
   wrapperClass=""
-  visible={true}
+  visible={loading}
         />
         </div>
     )

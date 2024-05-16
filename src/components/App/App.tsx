@@ -9,19 +9,32 @@ import toast, { Toaster } from 'react-hot-toast';
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 
-
+interface Modal{
+  imageSrc: string;
+  imageAltDescription: string;
+  imageDescription: string;
+  imageAuthor: string;
+  imageLikes: number;
+}
 
 const App = () => {
-    const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [numberOfPage, setNumberOfPage] = useState(0);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [images, setImages] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
+    const [searchValue, setSearchValue] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [numberOfPage, setNumberOfPage] = useState<number>(0);
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+    const [modalData, setModalData] = useState<Modal>({
+    imageSrc: "",
+    imageAltDescription: "",
+    imageDescription: "",
+    imageAuthor: "",
+    imageLikes: 0,
+    });
+    
 
-
-    const loadImages = async (query, currentPage) => {
+    const loadImages = async (query:string, currentPage:number) => {
          if (!query) {
       return;
     }
@@ -47,7 +60,7 @@ const App = () => {
         loadImages(searchValue, currentPage)
     }, [searchValue, currentPage]);
 
-    const handleSearch = (searchValue) => {
+    const handleSearch = (searchValue:string) => {
         setImages([]);
         setSearchValue(searchValue);
     }
@@ -56,13 +69,7 @@ const App = () => {
     }
     
 
-    const [modalData, setModalData] = useState({
-    imageSrc: "",
-    imageAltDescription: "",
-    imageDescription: "",
-    imageAuthor: "",
-    imageLikes: 0,
-    });
+    
     const openModal = () => {
     setModalIsOpen(true);
   };
@@ -71,7 +78,7 @@ const App = () => {
     setModalIsOpen(false);
     };
     
-    const handleImageClick = (imageData) => {
+    const handleImageClick = (imageData:Modal) => {
     setModalData(imageData);
     openModal();
   };
@@ -95,7 +102,7 @@ const App = () => {
   }}/>
             
             {images && <ImageGallery images={images} handleImageClick={handleImageClick} />}
-            {loading && <Loader/>}
+            {loading && <Loader loading={loading} />}
             {isError && <ErrorMessage/>}
             {images.length > 0 && currentPage < numberOfPage && <LoadMoreBtn onLoadMore={handleLoadMore} />}
            
